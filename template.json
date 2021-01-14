@@ -87,6 +87,17 @@
           }
         ]
       }
+    },
+    {
+      "apiVersion": "2019-08-01",
+      "type": "extensions",
+      "name": "zipdeploy",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
+      ],
+      "properties": {
+        "packageUri": "https://github.com/JasonFreeberg/RunFromPackage-ARM-template/blob/main/node-app.zip"
+      }
     }
   ]
 }
