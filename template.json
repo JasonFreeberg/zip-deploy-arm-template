@@ -19,7 +19,7 @@
     },
     "sku": {
       "type": "string",
-      "defaultValue": "F1",
+      "defaultValue": "B1",
       "metadata": {
         "description": "The SKU of App Service Plan."
       }
@@ -29,13 +29,6 @@
       "defaultValue": "DOTNETCORE|3.0",
       "metadata": {
         "description": "The Runtime stack of current web app"
-      }
-    },
-    "repoUrl": {
-      "type": "string",
-      "defaultValue": " ",
-      "metadata": {
-        "description": "Optional Git Repo URL"
       }
     }
   },
@@ -67,36 +60,27 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
         "siteConfig": {
-          "linuxFxVersion": "[parameters('linuxFxVersion')]"
+          "linuxFxVersion": "[parameters('linuxFxVersion')]",
+          "appSettings": [
+            {
+              "name": "WEBSITE_RUN_FROM_PACKAGE",
+              "value": "1"
+            }
+          ]
         },
         "resources": [
           {
-            "condition": "[contains(parameters('repoUrl'),'http')]",
-            "type": "sourcecontrols",
+            "type": "extensions",
+            "name": "zipdeploy",
             "apiVersion": "2020-06-01",
-            "name": "web",
-            "location": "[parameters('location')]",
             "dependsOn": [
               "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
             ],
             "properties": {
-              "repoUrl": "[parameters('repoUrl')]",
-              "branch": "master",
-              "isManualIntegration": true
+              "packageUri": "https://github.com/JasonFreeberg/RunFromPackage-ARM-template/blob/main/node-app.zip"
             }
           }
         ]
-      }
-    },
-    {
-      "apiVersion": "2019-08-01",
-      "type": "extensions",
-      "name": "zipdeploy",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
-      ],
-      "properties": {
-        "packageUri": "https://github.com/JasonFreeberg/RunFromPackage-ARM-template/blob/main/node-app.zip"
       }
     }
   ]

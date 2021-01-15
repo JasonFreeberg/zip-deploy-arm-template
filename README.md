@@ -1,5 +1,6 @@
 # RunFromPackage-ARM-template
-Trying RFP with ARM template
+
+Run with `source script.sh`.
 
 ## Notes
 - Initial ARM template taken from this doc: https://docs.microsoft.com/en-us/azure/app-service/quickstart-arm-template?pivots=platform-linux
