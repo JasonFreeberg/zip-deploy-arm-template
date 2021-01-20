@@ -69,18 +69,18 @@
           ]
         },
         "resources": [
-          {
-            "type": "extensions",
-            "name": "zipdeploy",
-            "apiVersion": "2020-06-01",
-            "dependsOn": [
-              "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
-            ],
-            "properties": {
-              "packageUri": "https://github.com/JasonFreeberg/RunFromPackage-ARM-template/blob/main/node-app.zip"
-            }
-          }
         ]
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/siteextensions",
+      "name": "[concat(parameters('webAppName'), '\/zipdeploy')]",
+      "apiVersion": "2020-09-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+      ],
+      "properties": {
+        "packageUri": "https://github.com/JasonFreeberg/RunFromPackage-ARM-template/blob/main/node-app.zip"
       }
     }
   ]
