@@ -1,0 +1,403 @@
+jasonfreeberg:RunFromPackage-ARM-template$ source script.sh
+{
+  "id": "/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo",
+  "location": "southcentralus",
+  "managedBy": null,
+  "name": "freebergARMDemo",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+Command arguments: ['deployment', 'group', 'create', '--resource-group', 'freebergARMDemo', '--parameters', 'webAppName=freeberg-rfp-demo', 'linuxFxVersion=NODE|10.15', '--template-file', 'template.json', '--debug']
+Event: Cli.PreExecute []
+Event: CommandParser.OnGlobalArgumentsCreate [<function CLILogging.on_global_arguments at 0x7f474ec89950>, <function OutputProducer.on_global_arguments at 0x7f474e7c36a8>, <function CLIQuery.on_global_arguments 
+at 0x7f474e551950>]
+Event: CommandInvoker.OnPreCommandTableCreate []
+Modules found from index for 'deployment': ['azure.cli.command_modules.resource']
+Loading command modules:
+Name                  Load Time    Groups  Commands
+resource                  0.010        35       164
+Total (1)                 0.010        35       164
+Loaded 35 groups, 164 commands.
+Found a match in the command table.
+Raw command  : deployment group create
+Command table: deployment group create
+Event: CommandInvoker.OnPreCommandTableTruncate [<function AzCliLogging.init_command_file_logging at 0x7f474d9b29d8>]
+az_command_data_logger : command args: deployment group create --resource-group {} --parameters {} {} --template-file {} --debug
+metadata file logging enabled - writing logs to '/home/jasonfreeberg/.azure/commands'.
+Event: CommandInvoker.OnPreArgumentLoad [<function register_global_subscription_argument.<locals>.add_subscription_parameter at 0x7f474d962b70>, <function register_global_query_examples_argument.<locals>.register_query_examples at 0x7f474d8d6730>]
+Configured default 'freebergDemo' for arg resource_group_name
+Event: CommandInvoker.OnPostArgumentLoad []
+Event: CommandInvoker.OnPostCommandTableCreate [<function register_ids_argument.<locals>.add_ids_arguments at 0x7f474d8d67b8>, <function register_cache_arguments.<locals>.add_cache_arguments at 0x7f474d8d68c8>] 
+Event: CommandInvoker.OnCommandTableLoaded []
+Event: CommandInvoker.OnPreParseArgs []
+Event: CommandInvoker.OnPostParseArgs [<function OutputProducer.handle_output_argument at 0x7f474e7c3730>, <function CLIQuery.handle_query_parameter at 0x7f474e5519d8>, <function register_global_query_examples_argument.<locals>.handle_example_parameter at 0x7f474d8d66a8>, <function register_ids_argument.<locals>.parse_ids_arguments at 0x7f474d8d6840>]
+attempting to read file template.json as utf-8-sig
+Getting management service client client_type=ResourceManagementClient
+msrest.universal_http.requests : Configuring retry: max_retries=4, backoff_factor=0.8, max_backoff=90
+msrest.universal_http.requests : Configuring retry: max_retries=4, backoff_factor=0.8, max_backoff=90
+{'properties': {'template': <azure.cli.command_modules.resource.custom.JsonCTemplate object at 0x7f474ad43b70>, 'parameters': {'webAppName': {'value': 'freeberg-rfp-demo'}, 'linuxFxVersion': {'value': 'NODE|10.15'}}, 'mode': 'Incremental'}}
+msrest.http_logger : Request URL: 'https://management.azure.com/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template/validate?api-version=2020-06-01'
+msrest.http_logger : Request method: 'POST'
+msrest.http_logger : Request headers:
+msrest.http_logger :     'Accept': 'application/json'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'accept-language': 'en-US'
+msrest.http_logger :     'User-Agent': 'python/3.6.10 (Linux-4.4.0-19041-Microsoft-x86_64-with-debian-buster-sid) msrest/0.6.18 msrest_azure/0.6.3 azure-mgmt-resource/10.2.0 Azure-SDK-For-Python AZURECLI/2.13.0 
+(DEB)'
+msrest.http_logger : Request body:
+msrest.http_logger : b'{"properties": {"parameters": {"webAppName": {"value": "freeberg-rfp-demo"}, "linuxFxVersion": {"value": "NODE|10.15"}}, "mode": "Incremental", template:{\n  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",\n  "contentVersion": "1.0.0.0",\n  "parameters": {\n    "webAppName": {\n      "type": "string",\n      "defaultValue": "[concat(\'webApp-\', uniqueString(resourceGroup().id))]",\n      "minLength": 2,\n      "metadata": {\n        "description": "Web app name."\n      }\n    },\n    "location": {\n      "type": "string",\n      "defaultValue": "[resourceGroup().location]",\n      "metadata": {\n        "description": "Location for all resources."\n      }\n    },\n    "sku": {\n      "type": "string",\n      "defaultValue": "B1",\n      "metadata": {\n        "description": "The SKU of App Service Plan."\n      }\n    },\n    "linuxFxVersion": {\n      "type": "string",\n      "defaultValue": "DOTNETCORE|3.0",\n      "metadata": {\n        "description": "The Runtime stack of current web app"\n      }\n    }\n  },\n  "variables": {\n    "appServicePlanPortalName": "[concat(\'AppServicePlan-\', parameters(\'webAppName\'))]"\n  },\n  "resources": [\n    {\n      "type": "Microsoft.Web/serverfarms",\n      "apiVersion": "2020-06-01",\n      "name": "[variables(\'appServicePlanPortalName\')]",\n      "location": "[parameters(\'location\')]",\n      "sku": {\n        "name": "[parameters(\'sku\')]"\n      },\n      "kind": "linux",\n      "properties": {\n        "reserved": true\n      }\n    },\n    {\n      "type": "Microsoft.Web/sites",\n      "apiVersion": "2020-06-01",\n      "name": "[parameters(\'webAppName\')]",\n      "location": "[parameters(\'location\')]",\n      "dependsOn": [\n        "[resourceId(\'Microsoft.Web/serverfarms\', variables(\'appServicePlanPortalName\'))]"\n      ],\n     
+ "properties": {\n        "serverFarmId": "[resourceId(\'Microsoft.Web/serverfarms\', variables(\'appServicePlanPortalName\'))]",\n        "siteConfig": {\n          "linuxFxVersion": "[parameters(\'linuxFxVersion\')]",\n          "appSettings": [\n            {\n              "name": "WEBSITE_RUN_FROM_PACKAGE",\n              "value": "1"\n            }\n          ]\n        },\n        "resources": [\n        ]\n    
+  }\n    },\n    {\n      "type": "Microsoft.Web/sites/extensions",\n      "name": "[concat(parameters(\'webAppName\'), \'\\/zipdeploy\')]",\n      "apiVersion": "2020-09-01",\n      "dependsOn": [\n        "[resourceId(\'Microsoft.Web/sites\', parameters(\'webAppName\'))]"\n      ],\n      "properties": {\n        "packageUri": "https://github.com/JasonFreeberg/RunFromPackage-ARM-template/blob/main/node-app.zip"\n    
+  }\n    }\n  ]\n}\n}}'
+attempting to read file /home/jasonfreeberg/.azure/accessTokens.json as utf-8-sig
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - Authority:Performing instance discovery: ...
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - Authority:Performing static instance discovery
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - Authority:Authority validated via static instance discovery
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - TokenRequest:Getting token from cache with refresh if necessary.
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - CacheDriver:finding with query keys: {'_clientId': '...', 'userId': '...'}
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - CacheDriver:Looking for potential cache entries: {'_clientId': '...', 'userId': '...'}
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - CacheDriver:Found 6 potential entries.
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - CacheDriver:Resource specific token found.
+adal-python : 602122b6-f6f8-46a9-88a5-c91eda92151f - CacheDriver:Returning token from cache lookup, AccessTokenId: b'xSGFRrnYog4B2HqofIfgIHBOdPM9JsK1My3hnC6cacA=', RefreshTokenId: b'8UWRMOZiSSVL113yysBVhOKkDB8fI0UuCOvDToT0VcM='
+msrest.universal_http : Configuring redirects: allow=True, max=30
+msrest.universal_http : Configuring request: timeout=100, verify=True, cert=None
+msrest.universal_http : Configuring proxies: ''
+msrest.universal_http : Evaluate proxies against ENV settings: True
+urllib3.connectionpool : Starting new HTTPS connection (1): management.azure.com:443
+urllib3.connectionpool : https://management.azure.com:443 "POST /subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template/validate?api-version=2020-06-01 HTTP/1.1" 200 None
+msrest.http_logger : Response status: 200
+msrest.http_logger : Response headers:
+msrest.http_logger :     'Cache-Control': 'no-cache'
+msrest.http_logger :     'Pragma': 'no-cache'
+msrest.http_logger :     'Transfer-Encoding': 'chunked'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'Content-Encoding': 'gzip'
+msrest.http_logger :     'Expires': '-1'
+msrest.http_logger :     'Vary': 'Accept-Encoding'
+msrest.http_logger :     'x-ms-ratelimit-remaining-subscription-writes': '1199'
+msrest.http_logger :     'x-ms-request-id': '142c4fef-9cd7-42c1-8a48-b151a984e4ee'
+msrest.http_logger :     'x-ms-correlation-request-id': '142c4fef-9cd7-42c1-8a48-b151a984e4ee'
+msrest.http_logger :     'x-ms-routing-request-id': 'WESTUS2:20210123T004913Z:142c4fef-9cd7-42c1-8a48-b151a984e4ee'
+msrest.http_logger :     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+msrest.http_logger :     'X-Content-Type-Options': 'nosniff'
+msrest.http_logger :     'Date': 'Sat, 23 Jan 2021 00:49:12 GMT'
+msrest.http_logger : Response content:
+msrest.http_logger : {"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template","name":"template","type":"Microsoft.Resources/deployments","properties":{"templateHash":"2120087783733715481","parameters":{"webAppName":{"type":"String","value":"freeberg-rfp-demo"},"location":{"type":"String","value":"southcentralus"},"sku":{"type":"String","value":"B1"},"linuxFxVersion":{"type":"String","value":"NODE|10.15"}},"mode":"Incremental","provisioningState":"Succeeded","timestamp":"2021-01-23T00:49:12.806368Z","duration":"PT0S","correlationId":"142c4fef-9cd7-42c1-8a48-b151a984e4ee","providers":[{"namespace":"Microsoft.Web","resourceTypes":[{"resourceType":"serverfarms","locations":["southcentralus"]},{"resourceType":"sites","locations":["southcentralus"]},{"resourceType":"sites/extensions","locations":[null]}]}],"dependencies":[{"dependsOn":[{"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/serverfarms/AppServicePlan-freeberg-rfp-demo","resourceType":"Microsoft.Web/serverfarms","resourceName":"AppServicePlan-freeberg-rfp-demo"}],"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo","resourceType":"Microsoft.Web/sites","resourceName":"freeberg-rfp-demo"},{"dependsOn":[{"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo","resourceType":"Microsoft.Web/sites","resourceName":"freeberg-rfp-demo"}],"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo/extensions/zipdeploy","resourceType":"Microsoft.Web/sites/extensions","resourceName":"freeberg-rfp-demo/zipdeploy"}],"validatedResources":[{"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/serverfarms/AppServicePlan-freeberg-rfp-demo"},{"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo"},{"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo/extensions/zipdeploy"}]}}
+{'properties': {'template': <azure.cli.command_modules.resource.custom.JsonCTemplate object at 0x7f474ad28d30>, 'parameters': {'webAppName': {'value': 'freeberg-rfp-demo'}, 'linuxFxVersion': {'value': 'NODE|10.15'}}, 'mode': 'Incremental'}}
+msrest.http_logger : Request URL: 'https://management.azure.com/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template?api-version=2020-06-01'
+msrest.http_logger : Request method: 'PUT'
+msrest.http_logger : Request headers:
+msrest.http_logger :     'Accept': 'application/json'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'accept-language': 'en-US'
+msrest.http_logger :     'User-Agent': 'python/3.6.10 (Linux-4.4.0-19041-Microsoft-x86_64-with-debian-buster-sid) msrest/0.6.18 msrest_azure/0.6.3 azure-mgmt-resource/10.2.0 Azure-SDK-For-Python AZURECLI/2.13.0 
+(DEB)'
+msrest.http_logger : Request body:
+msrest.http_logger : b'{"properties": {"parameters": {"webAppName": {"value": "freeberg-rfp-demo"}, "linuxFxVersion": {"value": "NODE|10.15"}}, "mode": "Incremental", template:{\n  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",\n  "contentVersion": "1.0.0.0",\n  "parameters": {\n    "webAppName": {\n      "type": "string",\n      "defaultValue": "[concat(\'webApp-\', uniqueString(resourceGroup().id))]",\n      "minLength": 2,\n      "metadata": {\n        "description": "Web app name."\n      }\n    },\n    "location": {\n      "type": "string",\n      "defaultValue": "[resourceGroup().location]",\n      "metadata": {\n        "description": "Location for all resources."\n      }\n    },\n    "sku": {\n      "type": "string",\n      "defaultValue": "B1",\n      "metadata": {\n        "description": "The SKU of App Service Plan."\n      }\n    },\n    "linuxFxVersion": {\n      "type": "string",\n      "defaultValue": "DOTNETCORE|3.0",\n      "metadata": {\n        "description": "The Runtime stack of current web app"\n      }\n    }\n  },\n  "variables": {\n    "appServicePlanPortalName": "[concat(\'AppServicePlan-\', parameters(\'webAppName\'))]"\n  },\n  "resources": [\n    {\n      "type": "Microsoft.Web/serverfarms",\n      "apiVersion": "2020-06-01",\n      "name": "[variables(\'appServicePlanPortalName\')]",\n      "location": "[parameters(\'location\')]",\n      "sku": {\n        "name": "[parameters(\'sku\')]"\n      },\n      "kind": "linux",\n      "properties": {\n        "reserved": true\n      }\n    },\n    {\n      "type": "Microsoft.Web/sites",\n      "apiVersion": "2020-06-01",\n      "name": "[parameters(\'webAppName\')]",\n      "location": "[parameters(\'location\')]",\n      "dependsOn": [\n        "[resourceId(\'Microsoft.Web/serverfarms\', variables(\'appServicePlanPortalName\'))]"\n      ],\n     
+ "properties": {\n        "serverFarmId": "[resourceId(\'Microsoft.Web/serverfarms\', variables(\'appServicePlanPortalName\'))]",\n        "siteConfig": {\n          "linuxFxVersion": "[parameters(\'linuxFxVersion\')]",\n          "appSettings": [\n            {\n              "name": "WEBSITE_RUN_FROM_PACKAGE",\n              "value": "1"\n            }\n          ]\n        },\n        "resources": [\n        ]\n    
+  }\n    },\n    {\n      "type": "Microsoft.Web/sites/extensions",\n      "name": "[concat(parameters(\'webAppName\'), \'\\/zipdeploy\')]",\n      "apiVersion": "2020-09-01",\n      "dependsOn": [\n        "[resourceId(\'Microsoft.Web/sites\', parameters(\'webAppName\'))]"\n      ],\n      "properties": {\n        "packageUri": "https://github.com/JasonFreeberg/RunFromPackage-ARM-template/blob/main/node-app.zip"\n    
+  }\n    }\n  ]\n}\n}}'
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - Authority:Performing instance discovery: ...
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - Authority:Performing static instance discovery
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - Authority:Authority validated via static instance discovery
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - TokenRequest:Getting token from cache with refresh if necessary.
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - CacheDriver:finding with query keys: {'_clientId': '...', 'userId': '...'}
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - CacheDriver:Looking for potential cache entries: {'_clientId': '...', 'userId': '...'}
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - CacheDriver:Found 6 potential entries.
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - CacheDriver:Resource specific token found.
+adal-python : b239fe18-c3eb-4c87-942b-18100ae2045e - CacheDriver:Returning token from cache lookup, AccessTokenId: b'xSGFRrnYog4B2HqofIfgIHBOdPM9JsK1My3hnC6cacA=', RefreshTokenId: b'8UWRMOZiSSVL113yysBVhOKkDB8fI0UuCOvDToT0VcM='
+msrest.universal_http : Configuring redirects: allow=True, max=30
+msrest.universal_http : Configuring request: timeout=100, verify=True, cert=None
+msrest.universal_http : Configuring proxies: ''
+msrest.universal_http : Evaluate proxies against ENV settings: True
+urllib3.connectionpool : https://management.azure.com:443 "PUT /subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template?api-version=2020-06-01 HTTP/1.1" 200 None
+msrest.http_logger : Response status: 200
+msrest.http_logger : Response headers:
+msrest.http_logger :     'Cache-Control': 'no-cache'
+msrest.http_logger :     'Pragma': 'no-cache'
+msrest.http_logger :     'Transfer-Encoding': 'chunked'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'Content-Encoding': 'gzip'
+msrest.http_logger :     'Expires': '-1'
+msrest.http_logger :     'Vary': 'Accept-Encoding'
+msrest.http_logger :     'Azure-AsyncOperation': 'https://management.azure.com/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template/operationStatuses/08585902439311728640?api-version=2020-06-01'
+msrest.http_logger :     'x-ms-ratelimit-remaining-subscription-writes': '1199'
+msrest.http_logger :     'x-ms-request-id': 'd253a70c-e113-4038-a32c-67821ac78ac6'
+msrest.http_logger :     'x-ms-correlation-request-id': 'd253a70c-e113-4038-a32c-67821ac78ac6'
+msrest.http_logger :     'x-ms-routing-request-id': 'WESTUS2:20210123T004915Z:d253a70c-e113-4038-a32c-67821ac78ac6'
+msrest.http_logger :     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+msrest.http_logger :     'X-Content-Type-Options': 'nosniff'
+msrest.http_logger :     'Date': 'Sat, 23 Jan 2021 00:49:15 GMT'
+msrest.http_logger : Response content:
+msrest.http_logger : {"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template","name":"template","type":"Microsoft.Resources/deployments","properties":{"templateHash":"2120087783733715481","parameters":{"webAppName":{"type":"String","value":"freeberg-rfp-demo"},"location":{"type":"String","value":"southcentralus"},"sku":{"type":"String","value":"B1"},"linuxFxVersion":{"type":"String","value":"NODE|10.15"}},"mode":"Incremental","provisioningState":"Accepted","timestamp":"2021-01-23T00:49:15.2661297Z","duration":"PT0.9613603S","correlationId":"d253a70c-e113-4038-a32c-67821ac78ac6","providers":[{"namespace":"Microsoft.Web","resourceTypes":[{"resourceType":"serverfarms","locations":["southcentralus"]},{"resourceType":"sites","locations":["southcentralus"]},{"resourceType":"sites/extensions","locations":[null]}]}],"dependencies":[{"dependsOn":[{"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/serverfarms/AppServicePlan-freeberg-rfp-demo","resourceType":"Microsoft.Web/serverfarms","resourceName":"AppServicePlan-freeberg-rfp-demo"}],"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo","resourceType":"Microsoft.Web/sites","resourceName":"freeberg-rfp-demo"},{"dependsOn":[{"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo","resourceType":"Microsoft.Web/sites","resourceName":"freeberg-rfp-demo"}],"id":"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergARMDemo/providers/Microsoft.Web/sites/freeberg-rfp-demo/extensions/zipdeploy","resourceType":"Microsoft.Web/sites/extensions","resourceName":"freeberg-rfp-demo/zipdeploy"}]}}
+Getting management service client client_type=MonitorManagementClient
+msrest.universal_http.requests : Configuring retry: max_retries=4, backoff_factor=0.8, max_backoff=90
+msrest.async_paging : Paging async iterator protocol is not available for EventDataPaged
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - Authority:Performing instance discovery: ...
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - Authority:Performing static instance discovery
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - Authority:Authority validated via static instance discovery
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - TokenRequest:Getting token from cache with refresh if necessary.
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - CacheDriver:finding with query keys: {'_clientId': '...', 'userId': '...'}
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - CacheDriver:Looking for potential cache entries: {'_clientId': '...', 'userId': '...'}
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - CacheDriver:Found 6 potential entries.
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - CacheDriver:Resource specific token found.
+adal-python : d1604506-4c66-4b18-a723-a020eca41ccf - CacheDriver:Returning token from cache lookup, AccessTokenId: b'xSGFRrnYog4B2HqofIfgIHBOdPM9JsK1My3hnC6cacA=', RefreshTokenId: b'8UWRMOZiSSVL113yysBVhOKkDB8fI0UuCOvDToT0VcM='
+msrest.http_logger : Request URL: 'https://management.azure.com/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/providers/microsoft.insights/eventtypes/management/values?api-version=2015-04-01&$filter=eventTimestamp%20ge%202020-12-12T08%3A49%3A26Z%20and%20correlationId%20eq%20%27d253a70c-e113-4038-a32c-67821ac78ac6%27'
+msrest.http_logger : Request method: 'GET'
+msrest.http_logger : Request headers:
+msrest.http_logger :     'Accept': 'application/json'
+msrest.http_logger :     'accept-language': 'en-US'
+msrest.http_logger :     'User-Agent': 'python/3.6.10 (Linux-4.4.0-19041-Microsoft-x86_64-with-debian-buster-sid) msrest/0.6.18 msrest_azure/0.6.3 azure-mgmt-monitor/0.11.0 Azure-SDK-For-Python AZURECLI/2.13.0 (DEB)'
+msrest.http_logger : Request body:
+msrest.http_logger : None
+msrest.universal_http : Configuring redirects: allow=True, max=30
+msrest.universal_http : Configuring request: timeout=100, verify=True, cert=None
+msrest.universal_http : Configuring proxies: ''
+msrest.universal_http : Evaluate proxies against ENV settings: True
+urllib3.connectionpool : Starting new HTTPS connection (1): management.azure.com:443
+urllib3.connectionpool : https://management.azure.com:443 "GET /subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/providers/microsoft.insights/eventtypes/management/values?api-version=2015-04-01&$filter=eventTimestamp%20ge%202020-12-12T08%3A49%3A26Z%20and%20correlationId%20eq%20%27d253a70c-e113-4038-a32c-67821ac78ac6%27 HTTP/1.1" 200 None
+msrest.http_logger : Response status: 200
+msrest.http_logger : Response headers:
+msrest.http_logger :     'Cache-Control': 'no-cache'
+msrest.http_logger :     'Pragma': 'no-cache'
+msrest.http_logger :     'Transfer-Encoding': 'chunked'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'Content-Encoding': 'gzip'
+msrest.http_logger :     'Expires': '-1'
+msrest.http_logger :     'Vary': 'Accept-Encoding,Accept-Encoding'
+msrest.http_logger :     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+msrest.http_logger :     'x-ms-request-id': 'WestUS_6b61195dc08a4760a90ffdb741d015b6_637469597717562989'
+msrest.http_logger :     'Server': 'Microsoft-IIS/10.0'
+msrest.http_logger :     'x-ms-ratelimit-remaining-subscription-reads': '11999'
+msrest.http_logger :     'x-ms-correlation-request-id': '3205852d-6679-44bc-8cd4-98ae18f845e6'
+msrest.http_logger :     'x-ms-routing-request-id': 'WESTUS2:20210123T004931Z:3205852d-6679-44bc-8cd4-98ae18f845e6'
+msrest.http_logger :     'X-Content-Type-Options': 'nosniff'
+msrest.http_logger :     'Date': 'Sat, 23 Jan 2021 00:49:31 GMT'
+msrest.http_logger : Response content:
+msrest.http_logger : {"value":[]}
+Getting management service client client_type=MonitorManagementClient
+msrest.universal_http.requests : Configuring retry: max_retries=4, backoff_factor=0.8, max_backoff=90
+msrest.async_paging : Paging async iterator protocol is not available for EventDataPaged
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - Authority:Performing instance discovery: ...
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - Authority:Performing static instance discovery
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - Authority:Authority validated via static instance discovery
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - TokenRequest:Getting token from cache with refresh if necessary.
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - CacheDriver:finding with query keys: {'_clientId': '...', 'userId': '...'}
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - CacheDriver:Looking for potential cache entries: {'_clientId': '...', 'userId': '...'}
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - CacheDriver:Found 6 potential entries.
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - CacheDriver:Resource specific token found.
+adal-python : 106b7e24-2a81-4577-8ea5-2affface02e1 - CacheDriver:Returning token from cache lookup, AccessTokenId: b'xSGFRrnYog4B2HqofIfgIHBOdPM9JsK1My3hnC6cacA=', RefreshTokenId: b'8UWRMOZiSSVL113yysBVhOKkDB8fI0UuCOvDToT0VcM='
+msrest.http_logger : Request URL: 'https://management.azure.com/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/providers/microsoft.insights/eventtypes/management/values?api-version=2015-04-01&$filter=eventTimestamp%20ge%202020-12-12T08%3A49%3A37Z%20and%20correlationId%20eq%20%27d253a70c-e113-4038-a32c-67821ac78ac6%27'
+msrest.http_logger : Request method: 'GET'
+msrest.http_logger : Request headers:
+msrest.http_logger :     'Accept': 'application/json'
+msrest.http_logger :     'accept-language': 'en-US'
+msrest.http_logger :     'User-Agent': 'python/3.6.10 (Linux-4.4.0-19041-Microsoft-x86_64-with-debian-buster-sid) msrest/0.6.18 msrest_azure/0.6.3 azure-mgmt-monitor/0.11.0 Azure-SDK-For-Python AZURECLI/2.13.0 (DEB)'
+msrest.http_logger : Request body:
+msrest.http_logger : None
+msrest.universal_http : Configuring redirects: allow=True, max=30
+msrest.universal_http : Configuring request: timeout=100, verify=True, cert=None
+msrest.universal_http : Configuring proxies: ''
+msrest.universal_http : Evaluate proxies against ENV settings: True
+urllib3.connectionpool : Starting new HTTPS connection (1): management.azure.com:443
+urllib3.connectionpool : https://management.azure.com:443 "GET /subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/providers/microsoft.insights/eventtypes/management/values?api-version=2015-04-01&$filter=eventTimestamp%20ge%202020-12-12T08%3A49%3A37Z%20and%20correlationId%20eq%20%27d253a70c-e113-4038-a32c-67821ac78ac6%27 HTTP/1.1" 200 None
+msrest.http_logger : Response status: 200
+msrest.http_logger : Response headers:
+msrest.http_logger :     'Cache-Control': 'no-cache'
+msrest.http_logger :     'Pragma': 'no-cache'
+msrest.http_logger :     'Transfer-Encoding': 'chunked'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'Content-Encoding': 'gzip'
+msrest.http_logger :     'Expires': '-1'
+msrest.http_logger :     'Vary': 'Accept-Encoding,Accept-Encoding'
+msrest.http_logger :     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+msrest.http_logger :     'x-ms-request-id': 'WestUS_e678f788e62447a79f37d2900a810ad9_637469597823338065'
+msrest.http_logger :     'Server': 'Microsoft-IIS/10.0'
+msrest.http_logger :     'x-ms-ratelimit-remaining-subscription-reads': '11999'
+msrest.http_logger :     'x-ms-correlation-request-id': '3b406785-cfca-4762-952c-a9f77e6fa6e2'
+msrest.http_logger :     'x-ms-routing-request-id': 'WESTUS2:20210123T004942Z:3b406785-cfca-4762-952c-a9f77e6fa6e2'
+msrest.http_logger :     'X-Content-Type-Options': 'nosniff'
+msrest.http_logger :     'Date': 'Sat, 23 Jan 2021 00:49:41 GMT'
+msrest.http_logger : Response content:
+msrest.http_logger : {"value":[]}
+msrest.service_client : Accept header absent and forced to application/json
+msrest.universal_http.requests : Configuring retry: max_retries=4, backoff_factor=0.8, max_backoff=90
+None
+msrest.http_logger : Request URL: 'https://management.azure.com/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template/operationStatuses/08585902439311728640?api-version=2020-06-01'
+msrest.http_logger : Request method: 'GET'
+msrest.http_logger : Request headers:
+msrest.http_logger :     'Accept': 'application/json'
+msrest.http_logger :     'x-ms-client-request-id': 'cc0a8306-5d14-11eb-82d6-3c52825372ee'
+msrest.http_logger :     'User-Agent': 'python/3.6.10 (Linux-4.4.0-19041-Microsoft-x86_64-with-debian-buster-sid) msrest/0.6.18 msrest_azure/0.6.3 azure-mgmt-resource/10.2.0 Azure-SDK-For-Python AZURECLI/2.13.0 
+(DEB)'
+msrest.http_logger : Request body:
+msrest.http_logger : None
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - Authority:Performing instance discovery: ...
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - Authority:Performing static instance discovery
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - Authority:Authority validated via static instance discovery
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - TokenRequest:Getting token from cache with refresh if necessary.
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - CacheDriver:finding with query keys: {'_clientId': '...', 'userId': '...'}
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - CacheDriver:Looking for potential cache entries: {'_clientId': '...', 'userId': '...'}
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - CacheDriver:Found 6 potential entries.
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - CacheDriver:Resource specific token found.
+adal-python : 8a1237ec-747d-4311-8dd4-e15d00543c4e - CacheDriver:Returning token from cache lookup, AccessTokenId: b'xSGFRrnYog4B2HqofIfgIHBOdPM9JsK1My3hnC6cacA=', RefreshTokenId: b'8UWRMOZiSSVL113yysBVhOKkDB8fI0UuCOvDToT0VcM='
+msrest.universal_http : Configuring redirects: allow=True, max=30
+msrest.universal_http : Configuring request: timeout=100, verify=True, cert=None
+msrest.universal_http : Configuring proxies: ''
+msrest.universal_http : Evaluate proxies against ENV settings: True
+urllib3.connectionpool : Starting new HTTPS connection (1): management.azure.com:443
+Getting management service client client_type=MonitorManagementClient
+msrest.universal_http.requests : Configuring retry: max_retries=4, backoff_factor=0.8, max_backoff=90
+msrest.async_paging : Paging async iterator protocol is not available for EventDataPaged
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - Authority:Performing instance discovery: ...
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - Authority:Performing static instance discovery
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - Authority:Authority validated via static instance discovery
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - TokenRequest:Getting token from cache with refresh if necessary.
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - CacheDriver:finding with query keys: {'_clientId': '...', 'userId': '...'}
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - CacheDriver:Looking for potential cache entries: {'_clientId': '...', 'userId': '...'}
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - CacheDriver:Found 6 potential entries.
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - CacheDriver:Resource specific token found.
+adal-python : 22cfe655-3f2d-4fa8-8c83-6a5929235f89 - CacheDriver:Returning token from cache lookup, AccessTokenId: b'xSGFRrnYog4B2HqofIfgIHBOdPM9JsK1My3hnC6cacA=', RefreshTokenId: b'8UWRMOZiSSVL113yysBVhOKkDB8fI0UuCOvDToT0VcM='
+msrest.http_logger : Request URL: 'https://management.azure.com/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/providers/microsoft.insights/eventtypes/management/values?api-version=2015-04-01&$filter=eventTimestamp%20ge%202020-12-12T08%3A49%3A47Z%20and%20correlationId%20eq%20%27d253a70c-e113-4038-a32c-67821ac78ac6%27'
+msrest.http_logger : Request method: 'GET'
+msrest.http_logger : Request headers:
+msrest.http_logger :     'Accept': 'application/json'
+msrest.http_logger :     'accept-language': 'en-US'
+msrest.http_logger :     'User-Agent': 'python/3.6.10 (Linux-4.4.0-19041-Microsoft-x86_64-with-debian-buster-sid) msrest/0.6.18 msrest_azure/0.6.3 azure-mgmt-monitor/0.11.0 Azure-SDK-For-Python AZURECLI/2.13.0 (DEB)'
+msrest.http_logger : Request body:
+msrest.http_logger : None
+msrest.universal_http : Configuring redirects: allow=True, max=30
+msrest.universal_http : Configuring request: timeout=100, verify=True, cert=None
+msrest.universal_http : Configuring proxies: ''
+msrest.universal_http : Evaluate proxies against ENV settings: True
+urllib3.connectionpool : Starting new HTTPS connection (1): management.azure.com:443
+urllib3.connectionpool : https://management.azure.com:443 "GET /subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freebergARMDemo/providers/Microsoft.Resources/deployments/template/operationStatuses/08585902439311728640?api-version=2020-06-01 HTTP/1.1" 200 323
+msrest.http_logger : Response status: 200
+msrest.http_logger : Response headers:
+msrest.http_logger :     'Cache-Control': 'no-cache'
+msrest.http_logger :     'Pragma': 'no-cache'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'Content-Encoding': 'gzip'
+msrest.http_logger :     'Expires': '-1'
+msrest.http_logger :     'Vary': 'Accept-Encoding'
+msrest.http_logger :     'x-ms-ratelimit-remaining-subscription-reads': '11999'
+msrest.http_logger :     'x-ms-request-id': '1ebabb9b-452f-45c2-91ba-ee1f5eba2482'
+msrest.http_logger :     'x-ms-correlation-request-id': '1ebabb9b-452f-45c2-91ba-ee1f5eba2482'
+msrest.http_logger :     'x-ms-routing-request-id': 'WESTUS2:20210123T004951Z:1ebabb9b-452f-45c2-91ba-ee1f5eba2482'
+msrest.http_logger :     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+msrest.http_logger :     'X-Content-Type-Options': 'nosniff'
+msrest.http_logger :     'Date': 'Sat, 23 Jan 2021 00:49:50 GMT'
+msrest.http_logger :     'Content-Length': '323'
+msrest.http_logger : Response content:
+msrest.http_logger : {"status":"Failed","error":{"code":"DeploymentFailed","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.","details":[{"code":"BadRequest","message":"{\r\n  \"error\": {\r\n    \"code\": \"BadRequest\",\r\n    \"message\": \"\"\r\n  }\r\n}"}]}}
+msrest.exceptions : At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.
+urllib3.connectionpool : https://management.azure.com:443 "GET /subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/providers/microsoft.insights/eventtypes/management/values?api-version=2015-04-01&$filter=eventTimestamp%20ge%202020-12-12T08%3A49%3A47Z%20and%20correlationId%20eq%20%27d253a70c-e113-4038-a32c-67821ac78ac6%27 HTTP/1.1" 200 None
+msrest.http_logger : Response status: 200
+msrest.http_logger : Response headers:
+msrest.http_logger :     'Cache-Control': 'no-cache'
+msrest.http_logger :     'Pragma': 'no-cache'
+msrest.http_logger :     'Transfer-Encoding': 'chunked'
+msrest.http_logger :     'Content-Type': 'application/json; charset=utf-8'
+msrest.http_logger :     'Content-Encoding': 'gzip'
+msrest.http_logger :     'Expires': '-1'
+msrest.http_logger :     'Vary': 'Accept-Encoding,Accept-Encoding'
+msrest.http_logger :     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+msrest.http_logger :     'x-ms-request-id': 'WestUS_607694452a9d4941a3c7c4e6b4ce02c7_637469597929254173'
+msrest.http_logger :     'Server': 'Microsoft-IIS/10.0'
+msrest.http_logger :     'x-ms-ratelimit-remaining-subscription-reads': '11998'
+msrest.http_logger :     'x-ms-correlation-request-id': 'a311f8cd-d2ff-466a-b739-dc6555e20d6b'
+msrest.http_logger :     'x-ms-routing-request-id': 'WESTUS2:20210123T004952Z:a311f8cd-d2ff-466a-b739-dc6555e20d6b'
+msrest.http_logger :     'X-Content-Type-Options': 'nosniff'
+msrest.http_logger :     'Date': 'Sat, 23 Jan 2021 00:49:52 GMT'
+msrest.http_logger : Response content:
+msrest.http_logger : {"value":[]}
+azure.cli.core.util.handle_exception is called with an exception:
+Traceback (most recent call last):
+  File "/opt/az/lib/python3.6/site-packages/msrestazure/polling/arm_polling.py", line 390, in run
+    self._poll()
+  File "/opt/az/lib/python3.6/site-packages/msrestazure/polling/arm_polling.py", line 418, in _poll
+    raise OperationFailed("Operation failed or cancelled")
+msrestazure.polling.arm_polling.OperationFailed: Operation failed or cancelled
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/__init__.py", line 978, in __call__
+    result = poller.result()
+  File "/opt/az/lib/python3.6/site-packages/msrest/polling/poller.py", line 183, in result
+    self.wait(timeout)
+  File "/opt/az/lib/python3.6/site-packages/msrest/polling/poller.py", line 201, in wait
+    raise self._exception  # type: ignore
+  File "/opt/az/lib/python3.6/site-packages/msrest/polling/poller.py", line 152, in _start
+    self._polling_method.run()
+  File "/opt/az/lib/python3.6/site-packages/msrestazure/polling/arm_polling.py", line 400, in run
+    raise CloudError(self._response)
+msrestazure.azure_exceptions.CloudError: Azure Error: DeploymentFailed
+Message: At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.
+Exception Details:
+        Error Code: BadRequest
+        Message: {'error': {'code': 'BadRequest', 'message': ''}}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/__init__.py", line 699, in _run_job
+    result = LongRunningOperation(cmd_copy.cli_ctx, 'Starting {}'.format(cmd_copy.name))(result)
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/__init__.py", line 982, in __call__
+    handle_long_running_operation_exception(client_exception)
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/arm.py", line 134, in handle_long_running_operation_exception
+    raise cli_error
+knack.util.CLIError: Deployment failed. Correlation ID: 1ebabb9b-452f-45c2-91ba-ee1f5eba2482. {
+  "error": {
+    "code": "BadRequest",
+    "message": ""
+  }
+}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/arm.py", line 103, in handle_template_based_exception
+    raise CLIError(ex.inner_exception.error.message)
+AttributeError: 'CLIError' object has no attribute 'inner_exception'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/az/lib/python3.6/site-packages/knack/cli.py", line 215, in invoke
+    cmd_result = self.invocation.execute(args)
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/__init__.py", line 654, in execute
+    raise ex
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/__init__.py", line 718, in _run_jobs_serially
+    results.append(self._run_job(expanded_arg, cmd_copy))
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/__init__.py", line 709, in _run_job
+    cmd_copy.exception_handler(ex)
+  File "/opt/az/lib/python3.6/site-packages/azure/cli/core/commands/arm.py", line 105, in handle_template_based_exception
+    raise CLIError(ex)
+knack.util.CLIError: Deployment failed. Correlation ID: 1ebabb9b-452f-45c2-91ba-ee1f5eba2482. {
+  "error": {
+    "code": "BadRequest",
+    "message": ""
+  }
+}
+
+cli.azure.cli.core.azclierror : Deployment failed. Correlation ID: 1ebabb9b-452f-45c2-91ba-ee1f5eba2482. {
+  "error": {
+    "code": "BadRequest",
+    "message": ""
+  }
+}
+Deployment failed. Correlation ID: 1ebabb9b-452f-45c2-91ba-ee1f5eba2482. {
+  "error": {
+    "code": "BadRequest",
+    "message": ""
+  }
+}
+Event: Cli.PostExecute [<function AzCliLogging.deinit_cmd_metadata_logging at 0x7f474d9b2bf8>]
+az_command_data_logger : exit code: 1
+Command ran in 48.201 seconds (init: 0.208, invoke: 47.993)
+telemetry.save : Save telemetry record of length 8474 in cache
+telemetry.check : Negative: The /home/jasonfreeberg/.azure/telemetry.txt was modified at 2021-01-22 16:49:07.203689, which in less than 600.000000 s

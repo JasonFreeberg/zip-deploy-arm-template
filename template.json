@@ -73,7 +73,7 @@
       }
     },
     {
-      "type": "Microsoft.Web/sites/siteextensions",
+      "type": "Microsoft.Web/sites/extensions",
       "name": "[concat(parameters('webAppName'), '\/zipdeploy')]",
       "apiVersion": "2020-09-01",
       "dependsOn": [
