@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "ef90e930-9d7f-4a60-8a99-748e0eea69de"
+        },
+        "name": {
+            "value": "freeberg-arm-zip-deploy-windows-template"
+        },
+        "location": {
+            "value": "Central US"
+        },
+        "hostingPlanName": {
+            "value": "AdoptPuppy"
+        },
+        "serverFarmResourceGroup": {
+            "value": "AdoptPuppy"
+        },
+        "alwaysOn": {
+            "value": true
+        },
+        "currentStack": {
+            "value": "node"
+        },
+        "phpVersion": {
+            "value": "OFF"
+        },
+        "nodeVersion": {
+            "value": "12.13.0"
+        }
+    }
+}
